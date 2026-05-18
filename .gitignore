@@ -1,0 +1,8 @@
+﻿*.pyc
+__pycache__/
+node_modules/
+.env
+explore.py
+explore2.py
+page.html
+dept_page.html
