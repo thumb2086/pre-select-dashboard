@@ -98,7 +98,11 @@ tr:hover td { background: #f5f8ff; }
 </div>
 
 <div id="section-student" class="section">
-  <div class="search-box"><input type="text" id="studentSearch" placeholder="輸入准考證號碼搜尋..." oninput="searchStudent()"></div>
+  <div class="search-box">
+    <select id="studentSelect" class="dept-select" onchange="searchStudent()">
+      <option value="">— 選擇准考證號碼 —</option>
+    </select>
+  </div>
   <div id="studentResult"></div>
 </div>
 
@@ -120,6 +124,7 @@ async function loadData() {
   data = { dist, comp, dates, students, deptNames, summary };
   renderOverview();
   renderDeptSelect();
+  renderStudentSelect();
   renderCompetition();
   renderDates();
 }
@@ -160,6 +165,13 @@ function renderDeptSelect() {
   const sel = document.getElementById('deptSelect');
   const names = data.deptNames;
   sel.innerHTML = Object.keys(names).sort().map(id => `<option value="${id}">${names[id]}</option>`).join('');
+}
+
+function renderStudentSelect() {
+  const sel = document.getElementById('studentSelect');
+  const ids = Object.keys(data.students).sort((a,b) => a.localeCompare(b, undefined, {numeric: true}));
+  sel.innerHTML = '<option value="">— 選擇准考證號碼 —</option>' +
+    ids.map(id => `<option value="${id}">${id}</option>`).join('');
 }
 
 function updateDistribution() {
@@ -235,7 +247,7 @@ function renderDates() {
 }
 
 function searchStudent() {
-  const q = document.getElementById('studentSearch').value.trim();
+  const q = document.getElementById('studentSelect').value;
   const div = document.getElementById('studentResult');
   if (!q) { div.innerHTML = ''; return; }
   const st = data.students[q];
