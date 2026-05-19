@@ -84,30 +84,30 @@ function updateDetail() {
   const keys = ['chinese','english','math','pro1','pro2'];
   let html = '<div class="chart-row">';
   html += '<div class="chart-box"><h3>篩選倍率</h3>';
-  html += '<table><thead><tr><th>科目</th><th>篩選倍率</th><th>加權倍數</th></tr></thead><tbody>';
+  html += '<table class="detail-table"><thead><tr><th>科目</th><th>篩選倍率</th><th>加權倍數</th></tr></thead><tbody>';
   for (let i = 0; i < 5; i++) {
     const fr = d.filter_ratios[keys[i]] || '--';
     const w = d.weight_multipliers[keys[i]] || '--';
-    html += '<tr><td>' + sbj[i] + '</td><td><strong>' + fr + '</strong></td><td>x' + w + '</td></tr>';
+    html += '<tr><td>' + sbj[i] + '</td><td><strong>' + fr + '</strong></td><td>' + w + '</td></tr>';
   }
   html += '</tbody></table></div>';
   html += '<div class="chart-box"><h3>基本資訊</h3>';
-  html += '<table><tbody>' +
-    '<tr><td>學校</td><td><strong>' + d.college_name + '</strong></td></tr>' +
-    '<tr><td>科系</td><td><strong>' + d.name + '</strong></td></tr>' +
-    '<tr><td>招生群類別</td><td>' + (d.category_code || '--') + '</td></tr>' +
-    '<tr><td>招生名額(一般)</td><td>' + d.quota_general + '</td></tr>' +
-    '<tr><td>預計甄試人數</td><td>' + d.expected_interviews + '</td></tr>' +
-    '<tr><td>統測成績占比</td><td>' + d.tcte_score_rate + '%</td></tr>' +
-    '<tr><td>甄試費</td><td>' + d.interview_fee + ' 元</td></tr>' +
-    '<tr><td>甄試日期</td><td>' + (d.interview_date || '--') + '</td></tr>' +
+  html += '<table class="detail-table"><tbody>' +
+    '<tr><td style="width:40%;color:#666;">學校</td><td><strong>' + d.college_name + '</strong></td></tr>' +
+    '<tr><td style="width:40%;color:#666;">科系</td><td><strong>' + d.name + '</strong></td></tr>' +
+    '<tr><td style="color:#666;">群類別</td><td>' + (d.category_code || '--') + '</td></tr>' +
+    '<tr><td style="color:#666;">招生名額</td><td>' + d.quota_general + '人</td></tr>' +
+    '<tr><td style="color:#666;">預計甄試</td><td>' + d.expected_interviews + '人</td></tr>' +
+    '<tr><td style="color:#666;">統測占比</td><td>' + d.tcte_score_rate + '%</td></tr>' +
+    '<tr><td style="color:#666;">甄試費</td><td>' + d.interview_fee + '元</td></tr>' +
+    '<tr><td style="color:#666;">甄試日期</td><td>' + (d.interview_date || '--') + '</td></tr>' +
     '</tbody></table></div>';
   html += '</div><div class="chart-row">';
   html += '<div class="chart-box full"><h3>第二階段指定項目</h3>';
   if (d.assign_items.length === 0) {
-    html += '<p>無指定項目</p>';
+    html += '<p style="color:#999;padding:8px;">無指定項目</p>';
   } else {
-    html += '<table><thead><tr><th>項目</th><th>名稱</th><th>最低得分</th><th>占總成績比率</th></tr></thead><tbody>';
+    html += '<table class="detail-table"><thead><tr><th style="width:50px;">項次</th><th>名稱</th><th style="width:80px;">最低得分</th><th style="width:100px;">占比</th></tr></thead><tbody>';
     d.assign_items.forEach(function(a, i) {
       html += '<tr><td>' + (i+1) + '</td><td>' + a.name + '</td><td>' + (a.min_score || '--') + '</td><td>' + a.rate + '</td></tr>';
     });
@@ -115,30 +115,30 @@ function updateDetail() {
   }
   html += '</div>';
   html += '</div><div class="chart-row">';
-  html += '<div class="chart-box"><h3>學習歷程上傳件數上限</h3>';
-  html += '<table><thead><tr><th>項目</th><th>件數</th></tr></thead><tbody>' +
+  html += '<div class="chart-box"><h3>學習歷程上傳限制</h3>';
+  html += '<table class="detail-table"><thead><tr><th>項目</th><th>件數</th></tr></thead><tbody>' +
     '<tr><td>A.修課紀錄</td><td>' + d.upload_limits.A + '</td></tr>' +
     '<tr><td>B-1.專題實作</td><td>' + d.upload_limits.B1 + '</td></tr>' +
     '<tr><td>B-2.其他學習成果</td><td>' + d.upload_limits.B2 + '</td></tr>' +
     '<tr><td>C.多元表現</td><td>' + d.upload_limits.C + '</td></tr>' +
-    '<tr><td>D-1.多元表現綜整心得</td><td>' + d.upload_limits.D1 + '</td></tr>' +
+    '<tr><td>D-1.綜整心得</td><td>' + d.upload_limits.D1 + '</td></tr>' +
     '<tr><td>D-2.學習歷程自述</td><td>' + d.upload_limits.D2 + '</td></tr>' +
     '<tr><td>D-3.其他有利審查</td><td>' + d.upload_limits.D3 + '</td></tr>' +
     '</tbody></table></div>';
   html += '<div class="chart-box"><h3>同分參酌順序</h3>';
   if (d.ref_order && d.ref_order.length > 0) {
-    html += '<ol>';
+    html += '<ol style="padding-left:20px;margin:8px 0;font-size:13px;">';
     d.ref_order.forEach(function(r) {
-      if (r && r !== '--') html += '<li>' + r + '</li>';
+      if (r && r !== '--') html += '<li style="padding:2px 0;">' + r + '</li>';
     });
     html += '</ol>';
   } else {
-    html += '<p>--</p>';
+    html += '<p style="color:#999;padding:8px;">--</p>';
   }
   html += '</div>';
   html += '</div>';
   if (d.notes) {
-    html += '<div class="chart-box full"><h3>備註</h3><p>' + d.notes + '</p></div>';
+    html += '<div class="chart-box full"><h3>備註</h3><p style="font-size:12px;line-height:1.6;white-space:pre-wrap;">' + d.notes + '</p></div>';
   }
   document.getElementById('detailContent').innerHTML = html;
 }
