@@ -1,0 +1,4 @@
+﻿Variables found (first 100KB):
+  var collegeData
+  var categoryData
+  var deptData

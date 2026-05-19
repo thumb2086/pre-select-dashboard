@@ -1,0 +1,21 @@
+﻿Search button: not found
+Form: {'action': 'https://www.jctv.ntut.edu.tw/downloads/115/apply/ugcdrom/index.html', 'method': 'get', 'onsubmit': 'none', 'target': ''}
+Script src: https://www.google-analytics.com/analytics.js
+Script src: https://www.googletagmanager.com/gtag/js?id=G-6ZZVPDWKNK&cx=c&gtm=4e65f1
+Script src: https://www.jctv.ntut.edu.tw/downloads/115/apply/ugcdrom/js/main.js
+Script inline: 
+
+        if (document.documentMode <= 7) {
+            alert("?函??汗?冽?隞嗆芋撘IE" + document.documentMode + "?粹??雿蝟餌絞??隤歹?撱箄降雿輻Google Chrome?ozilla FireFox?E8.0隞乩???汗?剁?隢[蝟餌絞隤芣???身摰撘?);
+        }
+    
+Script src: https://www.jctv.ntut.edu.tw/downloads/115/apply/ugcdrom/js/html5.js
+Script src: https://www.jctv.ntut.edu.tw/downloads/115/apply/ugcdrom/js/warehouse.js
+Script src: https://www.googletagmanager.com/gtag/js?id=UA-119275399-1
+Script inline: 
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-119275399-1');
+    

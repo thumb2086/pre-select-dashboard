@@ -1,0 +1,21 @@
+﻿URL: https://www.jctv.ntut.edu.tw/downloads/115/apply/ugcdrom/schoolQuery.php?schoolId=102001
+No 102001 found. Trying search form...
+No keyword input found
+  {'tag': 'INPUT', 'name': 'searchTypeInput', 'type': 'hidden', 'placeholder': ''}
+  {'tag': 'INPUT', 'name': 'keywordInput', 'type': 'text', 'placeholder': ''}
+  {'tag': 'SELECT', 'name': 'categorySelect', 'type': 'select-one', 'placeholder': ''}
+  {'tag': 'SELECT', 'name': 'areaSelect', 'type': 'select-one', 'placeholder': ''}
+  {'tag': 'SELECT', 'name': 'deptTypeSelect', 'type': 'select-one', 'placeholder': ''}
+  {'tag': 'SELECT', 'name': 'cond1Select', 'type': 'select-one', 'placeholder': ''}
+  {'tag': 'SELECT', 'name': 'cond2Select', 'type': 'select-one', 'placeholder': ''}
+  {'tag': 'SELECT', 'name': 'statusSelect', 'type': 'select-one', 'placeholder': ''}
+  {'tag': 'SELECT', 'name': 'ex2DateSelect', 'type': 'select-one', 'placeholder': ''}
+  {'tag': 'INPUT', 'name': 'assignRadio', 'type': 'radio', 'placeholder': ''}
+  {'tag': 'INPUT', 'name': 'assignRadio', 'type': 'radio', 'placeholder': ''}
+  {'tag': 'INPUT', 'name': 'assignRadio', 'type': 'radio', 'placeholder': ''}
+  {'tag': 'INPUT', 'name': 'assignRadio', 'type': 'radio', 'placeholder': ''}
+  {'tag': 'INPUT', 'name': 'assignRadio', 'type': 'radio', 'placeholder': ''}
+  {'tag': 'INPUT', 'name': 'assignInput', 'type': 'text', 'placeholder': ''}
+  {'tag': 'INPUT', 'name': 'assignFinalInput', 'type': 'text', 'placeholder': ''}
+  {'tag': 'INPUT', 'name': 'searchBtn', 'type': 'button', 'placeholder': ''}
+  {'tag': 'INPUT', 'name': 'singlePrintCodeInput', 'type': 'text', 'placeholder': ''}

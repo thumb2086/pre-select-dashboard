@@ -56,6 +56,7 @@ tr:hover td { background: #f5f8ff; }
   <a onclick="showTab('competition')">競爭激烈度</a>
   <a onclick="showTab('date')">日期衝突</a>
   <a onclick="showTab('student')">考生排名</a>
+  <a onclick="showTab('detail')">校系詳情</a>
 </div>
 
 <div class="container">
@@ -106,6 +107,11 @@ tr:hover td { background: #f5f8ff; }
   <div id="studentResult"></div>
 </div>
 
+<div id="section-detail" class="section">
+  <select class="dept-select" id="detailDeptSelect" onchange="updateDetail()"></select>
+  <div id="detailContent"></div>
+</div>
+
 </div>
 
 <script>
@@ -113,18 +119,20 @@ let data = {};
 let distChart = null, histChart = null, compChart = null;
 
 async function loadData() {
-  const [dist, comp, dates, students, deptNames, summary] = await Promise.all([
+  const [dist, comp, dates, students, deptNames, summary, deptDetails] = await Promise.all([
     fetch('data/score_distribution.json').then(r=>r.json()),
     fetch('data/competition.json').then(r=>r.json()),
     fetch('data/date_conflicts.json').then(r=>r.json()),
     fetch('data/student_rankings.json').then(r=>r.json()),
     fetch('data/dept_names.json').then(r=>r.json()),
     fetch('data/summary.json').then(r=>r.json()),
+    fetch('data/dept_details.json').then(r=>r.json()),
   ]);
-  data = { dist, comp, dates, students, deptNames, summary };
+  data = { dist, comp, dates, students, deptNames, summary, deptDetails };
   renderOverview();
   renderDeptSelect();
   renderStudentSelect();
+  renderDetailSelect();
   renderCompetition();
   renderDates();
 }
@@ -172,6 +180,98 @@ function renderStudentSelect() {
   const ids = Object.keys(data.students).sort((a,b) => a.localeCompare(b, undefined, {numeric: true}));
   sel.innerHTML = '<option value="">— 選擇准考證號碼 —</option>' +
     ids.map(id => `<option value="${id}">${id}</option>`).join('');
+}
+
+function renderDetailSelect() {
+  const sel = document.getElementById('detailDeptSelect');
+  const names = data.deptNames;
+  sel.innerHTML = Object.keys(names).sort().map(id => `<option value="${id}">${names[id]}</option>`).join('');
+}
+
+function updateDetail() {
+  const id = document.getElementById('detailDeptSelect').value;
+  const d = data.deptDetails[id];
+  if (!d) { document.getElementById('detailContent').innerHTML = ''; return; }
+  
+  const sbj = ['國文','英文','數學','專一','專二'];
+  const keys = ['chinese','english','math','pro1','pro2'];
+  const colors = { '國文':'#4CAF50','英文':'#2196F3','數學':'#FF9800','專一':'#9C27B0','專二':'#F44336' };
+  
+  let html = '<div class="chart-row">';
+  
+  // 篩選倍率 & 加權
+  html += '<div class="chart-box"><h3>篩選倍率</h3>';
+  html += '<table><thead><tr><th>科目</th><th>篩選倍率</th><th>加權倍數</th></tr></thead><tbody>';
+  for (let i = 0; i < 5; i++) {
+    const fr = d.filter_ratios[keys[i]] || '--';
+    const w = d.weight_multipliers[keys[i]] || '--';
+    html += `<tr><td>${sbj[i]}</td><td><strong>${fr}</strong></td><td>x${w}</td></tr>`;
+  }
+  html += '</tbody></table></div>';
+  
+  // 基本資訊
+  html += '<div class="chart-box"><h3>基本資訊</h3>';
+  html += `<table><tbody>
+    <tr><td>學校</td><td><strong>${d.college_name}</strong></td></tr>
+    <tr><td>科系</td><td><strong>${d.name}</strong></td></tr>
+    <tr><td>招生群類別</td><td>${d.category_code || '--'}</td></tr>
+    <tr><td>招生名額(一般)</td><td>${d.quota_general}</td></tr>
+    <tr><td>預計甄試人數</td><td>${d.expected_interviews}</td></tr>
+    <tr><td>統測成績占比</td><td>${d.tcte_score_rate}%</td></tr>
+    <tr><td>甄試費</td><td>${d.interview_fee} 元</td></tr>
+    <tr><td>甄試日期</td><td>${d.interview_date || '--'}</td></tr>
+  </tbody></table></div>';
+  
+  html += '</div><div class="chart-row">';
+  
+  // 二階段指定項目
+  html += '<div class="chart-box full"><h3>第二階段指定項目</h3>';
+  if (d.assign_items.length === 0) {
+    html += '<p>無指定項目</p>';
+  } else {
+    html += '<table><thead><tr><th>項目</th><th>名稱</th><th>最低得分</th><th>占總成績比率</th></tr></thead><tbody>';
+    d.assign_items.forEach((a, i) => {
+      html += `<tr><td>${i+1}</td><td>${a.name}</td><td>${a.min_score || '--'}</td><td>${a.rate}</td></tr>`;
+    });
+    html += '</tbody></table>';
+  }
+  html += '</div>';
+  
+  html += '</div><div class="chart-row">';
+  
+  // 學習歷程上傳限制
+  html += '<div class="chart-box"><h3>學習歷程上傳件數上限</h3>';
+  html += '<table><thead><tr><th>項目</th><th>件數</th></tr></thead><tbody>';
+  html += `<tr><td>A.修課紀錄</td><td>${d.upload_limits.A}</td></tr>`;
+  html += `<tr><td>B-1.專題實作</td><td>${d.upload_limits.B1}</td></tr>`;
+  html += `<tr><td>B-2.其他學習成果</td><td>${d.upload_limits.B2}</td></tr>`;
+  html += `<tr><td>C.多元表現</td><td>${d.upload_limits.C}</td></tr>`;
+  html += `<tr><td>D-1.多元表現綜整心得</td><td>${d.upload_limits.D1}</td></tr>`;
+  html += `<tr><td>D-2.學習歷程自述</td><td>${d.upload_limits.D2}</td></tr>`;
+  html += `<tr><td>D-3.其他有利審查</td><td>${d.upload_limits.D3}</td></tr>`;
+  html += '</tbody></table></div>';
+  
+  // 同分參酌順序
+  html += '<div class="chart-box"><h3>同分參酌順序</h3>';
+  if (d.ref_order && d.ref_order.length > 0) {
+    html += '<ol>';
+    d.ref_order.forEach((r, i) => {
+      if (r && r !== '--') html += `<li>${r}</li>`;
+    });
+    html += '</ol>';
+  } else {
+    html += '<p>--</p>';
+  }
+  html += '</div>';
+  
+  html += '</div>';
+  
+  // 備註
+  if (d.notes) {
+    html += `<div class="chart-box full"><h3>備註</h3><p>${d.notes}</p></div>`;
+  }
+  
+  document.getElementById('detailContent').innerHTML = html;
 }
 
 function updateDistribution() {

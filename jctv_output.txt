@@ -1,0 +1,24 @@
+﻿Link: Google Chrome -> https://www.google.com/intl/zh-TW/chrome/browser/desktop/index.html
+Link: Mozilla FireFox -> https://mozilla.com.tw/
+Link: 學校查詢 -> https://www.jctv.ntut.edu.tw/downloads/115/apply/ugcdrom/index.html#
+Link: 進階查詢 -> https://www.jctv.ntut.edu.tw/downloads/115/apply/ugcdrom/index.html#
+Link: 列印 -> https://www.jctv.ntut.edu.tw/downloads/115/apply/ugcdrom/index.html#
+Link: 回首頁 -> https://www.jctv.ntut.edu.tw/downloads/115/apply/ugcdrom/index.html#
+Link: 系統說明 -> https://www.jctv.ntut.edu.tw/downloads/115/apply/ugcdrom/index.html#
+Link: 重要日程表 -> https://www.jctv.ntut.edu.tw/downloads/115/apply/ugcdrom/files/B01.pdf
+Link: 附錄一 高職學校與高級中學畢業生及同等學力報名資格 -> https://www.jctv.ntut.edu.tw/downloads/115/apply/ugcdrom/files/A01.pdf
+Link: 重大變革與重要注意事項 -> https://www.jctv.ntut.edu.tw/downloads/115/apply/ugcdrom/files/B02.pdf
+Link: 附錄二 四技二專甄選入學招生學校一覽表 -> https://www.jctv.ntut.edu.tw/downloads/115/apply/ugcdrom/files/A02.pdf
+Link: 招生簡章總則全文 -> https://www.jctv.ntut.edu.tw/downloads/115/apply/ugcdrom/files/B03.pdf
+Link: 附錄三 報名費繳費方式及匯款注意事項 -> https://www.jctv.ntut.edu.tw/downloads/115/apply/ugcdrom/files/A03.pdf
+Link: 甄選群（類）別【統一入學測驗群（類）別對照表】 -> https://www.jctv.ntut.edu.tw/downloads/115/apply/ugcdrom/files/B04.pdf
+python : Traceback (most recent call last):
+位於 線路:1 字元:1
++ python "C:\Users\CPXru\Desktop\thumb\program\分析\explore_jctv2.py" *>& ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "C:\Users\CPXru\Desktop\thumb\program\分析\explore_jctv2.py", line 18, in <module>
+    print(f'Link: {l["text"]} -> {l["href"]}')
+UnicodeEncodeError: 'cp950' codec can't encode character '\ufa01' in position 15: illegal multibyte sequence
