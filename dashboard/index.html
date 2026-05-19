@@ -355,15 +355,13 @@ function searchStudent() {
   const quotaMap = {};
   data.comp.forEach(c => { quotaMap[c.depid] = c.quota; });
   let html = `<div class="stat-card" style="text-align:left;padding:16px;"><strong>准考證號：${q}</strong> — 報名 ${st.length} 個校系</div>
-  <div style="overflow-x:auto;"><table><thead><tr><th>校系</th><th>總分</th><th>排名</th><th>總人數</th><th>招生名額</th><th>排名百分比</th><th>錄取狀態</th></tr></thead><tbody>`;
+  <div style="overflow-x:auto;"><table><thead><tr><th>校系</th><th>總分</th><th>大安排名</th><th>大安人數</th><th>全國招生名額</th><th>大安占比</th></tr></thead><tbody>`;
   st.forEach(s => {
     const pct = Math.round(s.rank / s.count * 100);
     const quota = quotaMap[s.depid] || 0;
-    const admitted = s.rank <= quota;
-    const status = admitted ? '<span class="badge badge-green">正取</span>' : '<span class="badge badge-red">備取</span>';
     html += `<tr><td>${(data.deptNames[s.depid] || s.depid).replace(/^\d+/,'')}</td>
       <td><strong>${s.total}</strong></td><td>${s.rank}</td><td>${s.count}</td>
-      <td>${quota}</td><td>${pct}%</td><td>${status}</td></tr>`;
+      <td>${quota}</td><td>${pct}%</td></tr>`;
   });
   html += '</tbody></table></div>';
   div.innerHTML = html;
